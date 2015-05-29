@@ -79,7 +79,7 @@ h5, h6 {
 a, a:hover { 
   outline: none;
   text-decoration: underline;
-  color: #09D4FF;
+  color: #B22222;
 }
 
 a:hover { 
@@ -171,7 +171,7 @@ header {
 }
 
 #logo_text h1 a .logo_colour { 
-  color: #09D4FF;
+  color: #B22222;
 }
 
 #logo_text a:hover .logo_colour { 
@@ -467,7 +467,7 @@ ul#nav {
 }
 
 ul#nav ul { 
-  background: #09D4FF;
+  background: #B22222;
   margin-top: 5px;
   padding-bottom: 15px;
 }
@@ -482,7 +482,7 @@ ul#nav li a {
 }
 
 ul#nav li a:hover, ul#nav li a:focus, ul#nav li.selected a, ul#nav li.selected a:hover, ul#nav li.selected a:focus { 
-  color: #09D4FF;
+  color: #B22222;
   text-shadow: none;
 }
 
