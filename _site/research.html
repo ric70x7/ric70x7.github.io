@@ -23,12 +23,12 @@
       </div>
       <nav>
         <ul class="sf-menu" id="nav">
-          <li class="selected"><a href="index.html">Home</a></li>
+          <li><a href="index.html">Home</a></li>
           <li><a href="publications.html">Publications</a></li>
           <li><a href="talks.html">Talks</a></li>
           <li><a href="bio.html">Bio</a></li>
           <li><a href="software.html">Software</a></li>
-          <li><a href="research.html">Research</a></li>
+          <li class="selected"><a href="research.html">Research</a></li>
           <!--
           <li><a href="examples.html">Examples</a></li>
           <li><a href="page.html">A Page</a></li>
@@ -56,23 +56,15 @@
       </nav>
     </header>
     <div id="site_content">
-      <ul id="images">
-        <li><img src="images/hurricanes2.jpg" width="600" height="300" alt="hurricanes2005" /></li>
-        <li><img src="images/Sheffield2.jpg" width="600" height="400" alt="Sheffield1" /></li>
-        <li><img src="images/heatmapprobesets2.jpg" width="600" height="300" alt="MScthesis" /></li>
-        <li><img src="images/Makerere2.jpg" width="600" height="400" alt="Makerere1" /></li>
-        <li><img src="images/Kalungu_outliers2.jpg" width="600" height="300" alt="PhDthesis" /></li>
-        <li><img src="images/BakerSt221B2.jpg" width="600" height="300" alt="BakerSt221B" /></li>
-      </ul>
-      <div id="sidebar_container">
         <!--
+      <div id="sidebar_container">
         <div class="sidebar">
           <h3>Latest News</h3>
           <h4>New Website Launched</h4>
           <h5>January 1st, 2012</h5>
           <p>2012 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
         </div>
-        -->
+
         <div class="sidebar">
           <h3>Useful Links</h3>
           <ul>
@@ -82,16 +74,19 @@
           </ul>
         </div>
       </div>
+        -->
       <div class="content">
       <!-- <div class="container"> -->
 
 
 
-     <h1>Research</h1>
+     <div style="float: right; clear: left;"><IMG src="/images/rolling_globe.gif" alt="HTML5 Icon" style="width:330px;" ></div>
 
+<h1>Malaria</h1>
 <p>
-As part of my research, I work closely with <a href="http://air.ug/index.html">Makerere University</a> and the <a href="http://www.unglobalpulse.org/kampala">UN Pulse Lab</a>, in Uganda, to model malaria incidence across the country.
+I work closely with <a href="http://air.ug/index.html">Makerere University</a> and the <a href="http://www.unglobalpulse.org/kampala">UN Pulse Lab</a>, in Uganda, to model malaria incidence across the country.
 </p>
+
 
 <p>
 The collaborators in this project are:<br>
@@ -100,27 +95,35 @@ The collaborators in this project are:<br>
 -- <a href="http://staffwww.dcs.shef.ac.uk/people/N.Lawrence/">Neil Lawrence</a>
 </p>
 
+<h2>Summer School</h2>
 <p>
-We also organized a <a href="http://ml.dcs.shef.ac.uk/gpss/gprs13/">Gaussian Process Roadshow (2013)</a>, in Kampala, Uganda.
+As part of our research, we organized a <a href="http://ml.dcs.shef.ac.uk/gpss/gprs13/">Gaussian Process Roadshow (2013)</a>, in Kampala, Uganda.
 </p>
 
 
+<h2>Disease Monitor</h2>
+
 <p>
-This is a preview of a monitor system we have been working on: 
+Gaussian process models are a natural approach for analyzing functions that represent time series. The use of covariance kernels enable to analyse non-linear patterns by embedding an inference problem into an abstract space with a convenient structure.
+
+By combining different covariance kernels, a Gaussian process is able to describe complex functions. Each of the individual kernels contributes by encoding a specific set of properties or pattern of the resulting function.
+</p>
+
+<p>
+We have been working on a monitoring model, based on signal decompositon, that can be used as an early warning system. The idea is to focus on the short-term changes of the infection time series and identify in which stage (out of four) they are:
+ <img src="images/colors_explained.png" alt="HTML5 Icon" style="width:700px;"> 
+</p>
+
+<p>
+It works like this with real data:
  <img src="images/Kabarole.gif" alt="HTML5 Icon" style="width:700px;"> 
- <img src="images/uganda.gif" alt="HTML5 Icon" style="width:400px;"> 
+(the gray area means that the signal is too weak in comparison to the noise)
 </p>
 
 <p>
-The upper left quadrant represents an incidence 
-below the long term average, but increasing; 
-the upper right quadrant represents
-an incidence above the long term average and expanding; the
-bottom right quadrant represents an incidence above the
-average, but decreasing; and the bottom left quadrant represents
-an incidence below the average and decreasing.
-The gray area means that the signal is too weak in comparison to the noise. 
+Here it is applied to the whole country: 
 </p>
+ <img src="images/uganda.gif" alt="HTML5 Icon" style="width:400px;"> 
 
 
 
@@ -151,5 +154,4 @@ The gray area means that the signal is too weak in comparison to the noise.
   </script>
 </body>
 </html>
-
 
