@@ -24,47 +24,17 @@
       <nav>
         <ul class="sf-menu" id="nav">
           <li><a href="index.html">Home</a></li>
+          <li class="selected"><a href="research.html">Research</a></li>
           <li><a href="publications.html">Publications</a></li>
           <li><a href="talks.html">Talks</a></li>
           <li><a href="bio.html">Bio</a></li>
           <li><a href="software.html">Software</a></li>
-          <li class="selected"><a href="research.html">Research</a></li>
-          <!--
-          <li><a href="examples.html">Examples</a></li>
-          <li><a href="page.html">A Page</a></li>
-          <li><a href="another_page.html">Another Page</a></li>
-          <li><a href="#">Example Drop Down</a>
-            <ul>
-              <li><a href="#">Drop Down One</a></li>
-              <li><a href="#">Drop Down Two</a>
-                <ul>
-                  <li><a href="#">Sub Drop Down One</a></li>
-                  <li><a href="#">Sub Drop Down Two</a></li>
-                  <li><a href="#">Sub Drop Down Three</a></li>
-                  <li><a href="#">Sub Drop Down Four</a></li>
-                  <li><a href="#">Sub Drop Down Five</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down Three</a></li>
-              <li><a href="#">Drop Down Four</a></li>
-              <li><a href="#">Drop Down Five</a></li>
-            </ul>
-          </li>
-          <li><a href="contact.html">Contact Us</a></li>
-          -->
         </ul>
       </nav>
     </header>
     <div id="site_content">
+      <!--
       <div id="sidebar_container">
-        <!--
-        <div class="sidebar">
-          <h3>Latest News</h3>
-          <h4>New Website Launched</h4>
-          <h5>January 1st, 2012</h5>
-          <p>2012 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
-        </div>
-        -->
         <div class="sidebar">
 
           <h3>Where is Uganda?</h3>
@@ -87,54 +57,332 @@
             
         </div>
       </div>
+      -->
       <div class="content">
-      <!-- <div class="container"> -->
 
 
 
-     <h1>PLK Monitor of Infectious Diseases</h1>
-... work in progress<br>
-
-<h1>Malaria Infections</h1>
-<p>
-This was a collaboration between
-<a href="http://air.ug/index.html">Makerere University</a>, in Uganda, 
-<a href="http://air.ug/index.html">The University of Sheffield</a>, in UK,
-and <a href="http://www.unglobalpulse.org/kampala">UN Global Pulse
-Kampala</a>.  
-</p>
-
-<h2>Methodological Approach</h2>
-<p>
-Gaussian process models are a natural approach for analyzing functions that represent time series. The use of covariance kernels enable to analyse non-linear patterns by embedding an inference problem into an abstract space with a convenient structure.
-
-By combining different covariance kernels, a Gaussian process is able to describe complex functions. Each of the individual kernels contributes by encoding a specific set of properties or pattern of the resulting function.
-</p>
+     <style type="text/css">
+#main_cols {
+   width:1000px;
+   margin:0 auto;
+}
+#left_col {
+   float:left;
+   width:700px;
+}
+#right_col {
+   float:right;
+   width:300px;
+}
+</style>
 
 
-<h2>Summer School</h2>
-<p>
-As part of our research, we organized a <a href="http://ml.dcs.shef.ac.uk/gpss/gprs13/">Gaussian Process Roadshow (2013)</a>, in Kampala, Uganda.
-</p>
 
 
-<h2>Disease Monitor</h2>
+These are some of the projects I am (or have been) involved in:
+<ul>
+  <li><a href="#electrification">Households Electrification in Africa</a></li>
+  <li><a href="#catchment_areas">Health Care Access in Zambia</a></li>
+  <li><a href="#plk_response">PLK Response to Disease Outbreaks</a></li>
+  <li><a href="#ts_variations">Analysis of Short Term Variations of Disease Cases</a></li>
+</ul>
 
-<p>
-We have been working on a monitoring model, based on signal decompositon, that can be used as an early warning system. The idea is to focus on the short-term changes of the infection time series and identify in which stage (out of four) they are:
- <img src="images/malaria/colors_explained.png" alt="HTML5 Icon" style="width:700px;"> 
-</p>
 
-<p>
-It works like this with real data:
- <img src="images/malaria/Kabarole.gif" alt="HTML5 Icon" style="width:900px;"> 
-(the grey area means that the signal is too weak in comparison to the noise)
-</p>
+<a name="electrification"></a> <h1>Households Electrification in Africa</h1>
 
-<p>
-Here it is applied to the whole country: 
-</p>
- <img src="images/malaria/uganda.gif" alt="HTML5 Icon" style="width:400px;"> 
+<div id="main_cols">
+  <div id="left_col">
+
+    <h2>Background</h2>
+    <p>
+    Demographic and Health Surveys (DHS) collect information about household
+    indicators related to wealth in different countries across time. One such
+    indicator is access to electricity. Unfortunately, due to the varying
+    periodicity and spatial coverage of these surveys, the information they
+    contain is not representative at a regional scale. Fortunately, access
+    to electricity can be indirectly measured via remote sensing. 
+    </p>
+
+    <h2>What we did</h2>
+    <p>
+    National Oceanic and Atmospheric Administration stellites have been
+    capturing images of nighttime light globally since 1992. While 
+    nighttime light images do not immediatly translate into electricity
+    access of households, we defined a model to lear the association 
+    between both. We used information from 73 DHS surveys, light intensity
+    extracted from inter-calibrated nightlight images and population density.
+    We followed a Bayesian model based geostatistics approach, and used
+    integrated nested Laplace approximation (INLA) to make inference on
+    household's electricity access in Africa. The model is used to predict
+    the probability of a household having electricity annualy from 2000 to
+    2015 across Africa at a 5Km resolution.
+    </p>
+
+    <img src="images/electrification/electrification_movie.gif"
+     alt="electrification_movie" style="width:650px;"> 
+
+    <h2>More information</h2>
+    <p>
+    This work is part of the Vector Control program of the
+    Malaria Elimination Initiative at UCSF Gloabal Health Group.
+    </br>
+    This is still work in progress.
+    </p>
+
+  </div>
+  <div id="right_col">
+
+    <h3>Collaborators</h3>
+    <ul>
+      <li><a href="">Adam Bennet</a><br></li>
+      <li><a href="">Hugh Sturrock</a><br></li>
+      <li><a href="">David Savory</a></li>
+      <li><a href="">Alemayehu Midekisa</a></li>
+      <li><a href="">Pete Gething</a></li>
+    </ul>
+
+    <h3>Funded by</h3>
+    <ul>
+      <li><a href="http://www.gatesfoundation.org/">The Bill & Melinda Gates</br>Foundation</a><br></li>
+      <li><a href="http://parker.org/">The Parker Foundation</a></li>
+    </ul>
+
+  </div>
+</div>
+
+
+<a name="catchment_areas"></a> <h1>Health Care Access in Zambia</h1>
+
+<div id="main_cols">
+  <div id="left_col">
+
+    <h2>Background</h2>
+    <p>
+    Routine health facility outpatient data are an imperfect measure of
+    disease incidence in communities. Two main difficulties arise when
+    trying to estimate community level incidence from cases reported at 
+    the health facility. First, health records are only representative
+    of those individuals who sought treatment. Thus, the number of
+    cases captured is likely to be an underestimate of the actual number
+    of cases captured. Second, as information on the location of residence
+    of cases is often lacking, catchment boundaries and populations are
+    often uncertain. 
+    </p>
+
+    <h2>What we did</h2>
+    <p>
+    We defined a probabilistic model that encodes the decision process
+    of an individual when seeking for treatment and choosing a health
+    facility to attend. Our model factors travel cost (based on distance
+    and maximum speed allowed by the terrain) as well as the types of
+    health facilities in close proximity. The model allows for overlapping
+    weighted catchment areas to be defined for each health facility
+    depending on its type, travel cost and location of other facilities.
+    </p>
+
+    <h3>Travel cost</h3>
+    <p>
+    <img src="images/catchment_areas/land_cover.png" alt="land_cover" style="width:200px;"> 
+    <img src="images/catchment_areas/roads.png" alt="roads" style="width:200px;"> 
+    <img src="images/catchment_areas/rivers.png" alt="rivers" style="width:200px;"> 
+    </br>
+    The travel costs to a health facility were defined using information
+    of land cover, main roads and water bodies.
+    </p>
+
+    <h3>Treatment seeking and disease incidence</h3>
+    <p>
+    <img src="images/catchment_areas/tseeking_movie.gif"
+     alt="tseeking_movie" style="width:348px;"> 
+    <img src="images/catchment_areas/log_intensity_movie.gif"
+     alt="log_intensity_movie" style="width:348px;"> 
+    </br>
+    The left figure shows the likelihood of seeking treatment when that
+    a patient presents symptoms of disease, depending on
+    the location of the household in the country. The right figure shows the
+    anual estimate of infections (log scale) per 5Km in Zambia.
+    </p>
+
+    <h2>More information</h2>
+    <p>
+    This is still work in progress.
+    </p>
+
+  </div>
+  <div id="right_col">
+
+    <h3>Collaborators</h3>
+    <ul>
+      <li><a href="">Adam Bennet</a><br></li>
+      <li><a href="">Hugh Sturrock</a><br></li>
+      <li><a href="">Samir Bhatt</a></li>
+      <li><a href="">Dan Weiss</a></li>
+      <li><a href="">Busiku Hamainza</a></li>
+      <li><a href="">Kafula Silumbe</a></li>
+      <li><a href="">John Miller</a></li>
+      <li><a href="">Pete Gething</a></li>
+      <li><a href="">Thomas Eisele</a></li>
+    </ul>
+
+    <h3>Funded by</h3>
+    <ul>
+      <li><a href="http://www.gatesfoundation.org/">The Bill & Melinda Gates</br>Foundation</a><br></li>
+
+    </ul>
+
+  </div>
+</div>
+
+
+<a name="plk_response"></a> <h1>PLK Response to Disease Outbreaks</h1>
+
+<div id="main_cols">
+  <div id="left_col">
+
+    <h2>Background</h2>
+    <p>
+    Pulse Lab Kampala and its partners are working on a tool to support
+    the response to disease outbreaks. This tool uses
+    Big Data Analytics to produce data visualisations
+    and incorporate risk factor information.
+    Unreported disease cases introduce noise to an outbreak tracking system, 
+    as they are prone to cause misleading trends.   
+    </p>
+
+    <h2>What we did</h2>
+    <p>
+    We defined a model for estimating non-reported disease cases.
+    Assuming some smoothness across time, missing observations of disease
+    case-counts can be estimated through the interpolation of the reported values.
+    This approach can be improved if we consider information form nearby health
+    facilities. 
+    For example, usually, after a wet season in a specific region, an increase
+    in the number of Malaria cases or outbreaks for other diseases are expected.
+    This effect should be similar in all health facilities within the same region.
+    </p>
+
+    <p>
+    <img src="images/missing_data/3_hf.png" alt="3hf" style="width:600px;"> 
+    </br>
+    The image above shows the reported cases per week by three health facilities in a District in Uganda.
+    </p>
+
+    <p>
+    <img src="images/missing_data/stacked_bars.png" alt="stacked_bars" style="width:600px;"> 
+    </br>
+    The image above shows total cases reported and estimated per week in the same District.
+    </p>
+
+
+    <h2>More information</h2>
+    <p>
+    More information on the work of the Pulse Lab Kampla, can be found here:
+    </br>
+    <a href="http://diseaseoutbreaks.unglobalpulse.net/uganda/">PLK Disease Outbreak System</a>
+    </br>
+    <a href="http://www.unglobalpulse.org/kampala">PLK website</a>
+    </p>
+
+  </div>
+  <div id="right_col">
+
+    <h3>Collaborators</h3>
+    <ul>
+      <li><a href="http://air.ug/~mmubangizi/">Martin Mubangizi</a><br></li>
+      <li><a href="http://air.ug/~jquinn/">John Quinn</a><br></li>
+      <li><a href="http://staffwww.dcs.shef.ac.uk/people/N.Lawrence/">Neil Lawrence</a></li>
+      <img src="images/logos/makerere_logo3.jpg" alt="HTML5 Icon" style="width:200px;left"> 
+      <img src="images/logos/Pulse_Lab_Kampala_logo2.png" alt="HTML5 Icon" style="width:200px;left"> 
+      <img src="images/logos/tuoslogo_key_cmyk_med.jpg" alt="HTML5 Icon" style="width:200px;left"> 
+    </ul>
+
+  </div>
+</div>
+
+<a name="ts_variations"></a>
+<h1>Analysis of Short Term Variations of Disease Cases</h1>
+
+<div id="main_cols">
+  <div id="left_col">
+
+    <h2>Background</h2>
+    <p>
+    In Uganda, malaria is among the leading causes of morbidity
+    and mortality. Different types of interventions can be carried
+    on to prevent and treat malaria. Their success depend on
+    how well the disease can be anticipated and how fast the
+    population reacts to it.
+    </p>
+
+    <h2>What we did</h2>
+    <p>
+    We developed a method to monitor the progress of the
+    number of infections of a particular disease. The method
+    is based on Gaussian processes and allows
+    to study the effect a time series components individually
+    by isolating them and explore the short term variations.
+    </p>
+
+
+    <p>
+    With this model, we can clasify the infection phase that the
+    districts in Uganda are going through.
+    </p>
+    <img src="images/ts_variations/4phases.png"
+     alt="4phases" style="width:475px;vertical-align:middle"> 
+    <img src="images/ts_variations/malariamap_movie.gif"
+     alt="map_movie" style="width:201px;vertical-align:middle"> 
+
+    <p>
+    In the left panel, the multicolored line represents the number
+    of disease cases across time, while the red line represents the
+    long term trend. The first section, corresponds to a number of cases
+    below the long term average and decreasing. The second section corresponds
+    to an increasing number of cases, but still below the trend. The third
+    section corresponds to an increasing number of cases above the trend.
+    The last section corresponds to a reduction in the number
+    of cases, but still above the long term average.
+    </p>
+
+    <p>
+    The right panel, shows the stage of different districts in Uganda across 
+    different weeks. White color means that the short term signal is too
+    weak in comparison to the noise.
+    </p>
+
+    <h2>More information</h2>
+    <p>
+    This work was presented at the
+    <a href="http://ceur-ws.org/Vol-1425/">AALTD 2015 Workshop</a>.<br>
+    Here is the <a href="http://ceur-ws.org/Vol-1425/paper2.pdf">paper</a>.
+    </p>
+
+  </div>
+  <div id="right_col">
+
+    <h3>Collaborators</h3>
+    <ul>
+      <li><a href="http://air.ug/~mmubangizi/">Martin Mubangizi</a><br></li>
+      <li><a href="http://air.ug/~jquinn/">John Quinn</a><br></li>
+      <li><a href="http://staffwww.dcs.shef.ac.uk/people/N.Lawrence/">Neil Lawrence</a></li>
+      <img src="images/logos/makerere_logo3.jpg" alt="HTML5 Icon" style="width:200px;left"> 
+      <img src="images/logos/Pulse_Lab_Kampala_logo2.png" alt="HTML5 Icon" style="width:200px;left"> 
+      <img src="images/logos/tuoslogo_key_cmyk_med.jpg" alt="HTML5 Icon" style="width:200px;left"> 
+    </ul>
+
+    <h3>Where is Uganda?</h3>
+    <div style="float:left; clear:left;"><IMG src="/images/ts_variations/ug_zoom.gif"
+     alt="HTML5 Icon" style="width:250px;"></div>
+
+    <h3>Funded by</h3>
+    <ul>
+      <li><a href="http://conacyt.gob.mx/">Conacyt</a><br></li>
+    </ul>
+
+  </div>
+</div>
+
 
 
 
