@@ -40,27 +40,8 @@ These are some of the projects I am (or have been) involved in:
     indicators related to wealth in different countries across time. One such
     indicator is access to electricity. Unfortunately, due to the varying
     periodicity and spatial coverage of these surveys, the information they
-    contain is not representative at a regional scale. Fortunately, access
-    to electricity can be indirectly measured via remote sensing. 
+    contain is not representative at a regional scale.  
     </p>
-
-    <h2>What we did</h2>
-    <p>
-    National Oceanic and Atmospheric Administration stellites have been
-    capturing images of nighttime light globally since 1992. While 
-    nighttime light images do not immediatly translate into electricity
-    access of households, we defined a model to lear the association 
-    between both. We used information from 73 DHS surveys, light intensity
-    extracted from inter-calibrated nightlight images and population density.
-    We followed a Bayesian model based geostatistics approach, and used
-    integrated nested Laplace approximation (INLA) to make inference on
-    household's electricity access in Africa. The model is used to predict
-    the probability of a household having electricity annualy from 2000 to
-    2015 across Africa at a 5Km resolution.
-    </p>
-
-    <img src="images/electrification/electrification_movie.gif"
-     alt="electrification_movie" style="width:650px;"> 
 
     <h2>More information</h2>
     <p>
@@ -109,40 +90,6 @@ These are some of the projects I am (or have been) involved in:
     of cases captured. Second, as information on the location of residence
     of cases is often lacking, catchment boundaries and populations are
     often uncertain. 
-    </p>
-
-    <h2>What we did</h2>
-    <p>
-    We defined a probabilistic model that encodes the decision process
-    of an individual when seeking for treatment and choosing a health
-    facility to attend. Our model factors travel cost (based on distance
-    and maximum speed allowed by the terrain) as well as the types of
-    health facilities in close proximity. The model allows for overlapping
-    weighted catchment areas to be defined for each health facility
-    depending on its type, travel cost and location of other facilities.
-    </p>
-
-    <h3>Travel cost</h3>
-    <p>
-    <img src="images/catchment_areas/land_cover.png" alt="land_cover" style="width:200px;"> 
-    <img src="images/catchment_areas/roads.png" alt="roads" style="width:200px;"> 
-    <img src="images/catchment_areas/rivers.png" alt="rivers" style="width:200px;"> 
-    </br>
-    The travel costs to a health facility were defined using information
-    of land cover, main roads and water bodies.
-    </p>
-
-    <h3>Treatment seeking and disease incidence</h3>
-    <p>
-    <img src="images/catchment_areas/tseeking_movie.gif"
-     alt="tseeking_movie" style="width:348px;"> 
-    <img src="images/catchment_areas/log_intensity_movie.gif"
-     alt="log_intensity_movie" style="width:348px;"> 
-    </br>
-    The left figure shows the likelihood of seeking treatment when that
-    a patient presents symptoms of disease, depending on
-    the location of the household in the country. The right figure shows the
-    anual estimate of infections (log scale) per 5Km in Zambia.
     </p>
 
     <h2>More information</h2>
