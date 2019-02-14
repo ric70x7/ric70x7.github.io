@@ -1,0 +1,342 @@
+---
+layout: default
+---
+
+<div id="content" class="mobileUI-main-content">
+  <div id="content-inner">
+    <article class="is-post is-post-excerpt">
+
+      <header>
+        <h2>Unittest and Pytest</h2>
+        <span class="byline">A brief introduction and comparison of both frameworks</span>
+      </header>
+
+      <div class="info">
+        <span class="date">
+          <span class="month">Feb</span><span class="day">13</span><span class="year">2019</span>
+        </span>
+        <ul class="stats">
+          <!--
+            <li><a href="#" class="link-icon24 link-icon24-1">16</a></li>
+            <li><a href="#" class="link-icon24 link-icon24-2">32</a></li>
+            <li><a href="#" class="link-icon24 link-icon24-3">64</a></li>
+            <li><a href="#" class="link-icon24 link-icon24-4">128</a></li>
+          -->
+        </ul>
+      </div>
+
+      <!--
+      <a href="#" class="image image-full"><img src="images/n33-robot-invader.jpg" alt=""></a>
+      -->
+
+      <p>In this post I will show how to define some tests using the frameworks
+      <i>unittest</i> and <i>pytest</i>. I am more familiar with unittest, but
+      it so happens that at the moment I am learning pytest. I like what I
+      have seen from it: the syntax for defining tests shorter and the coverage report
+      is more informative than with unittest. I have to say that this is not
+      intended as a thorough introduction of code testing. There are much
+      better manuals available and I am far from being an expert. This is just
+      a starting point.</p>
+
+      <p>I will define some tests for some code I used in a previous post on
+      how to define <a href="20190121_buffers.html">Buffer Zones</a>.
+      The code is structured as a package and can be downloaded from my
+      <a href="https://github.com/ric70x7/Buffers">github repository</a>. It
+      consists of three functions that define polygons around a set of
+      points. There are two branches that we will use here: unittest and
+      pytest. Each branch has tests defined according to each framework.
+      The tree structure of the package is shown below. I placed the tests
+      inside the directory named testing/. The file <i>buffers.py</i> is the one
+      that contains the functions we will be testing. The tests are stored in
+      the file <i>test_buffers.py</i>.</p>
+
+<pre><code class="language-python">>>> tree
+.
+├── buffers.py
+├── __init__.py
+├── __pycache__
+├── README.md
+└── testing
+    ├── test_buffers.py
+    └── __pycache__
+</code></pre>
+
+      <p>Below I am showing the first lines of the function
+      voronoi_polygons</i>.
+<pre><code class="language-python">def voronoi_polygons(X, margin=0):
+    assert isinstance(X, np.ndarray), 'Expecting a numpy array.'
+    assert X.ndim == 2, 'Expecting a two-dimensional array.'
+    assert X.shape[1] == 2, 'Number of columns is different from expected.'
+</code></pre>
+
+      <p>The code above is checking that X:
+      <li> is numpy array </li>
+      <li> has two dimensions </li>
+      <li> has two columns </li>
+      <p>
+
+      <p>If any of these conditions is not satisfied, the code should raise an
+      AssertionError. On the contrary, if X is an array of the required
+      characteristics, say 10 rows and 2 columns, we shouldn't see any
+      error at this stage of the code. These assert statements are not tests,
+      they instruct the program to halt when the
+      inputs received are not of the right type. Next we will see how to test this code
+      under both frameworks.</p>
+
+      <span class="byline">Unittest</span>
+
+      <p>To check the right behaviour of the code with unittest we can define
+      the following testing routine in the file test_buffers.py.</p>
+
+<pre><code class="language-python"># Import the unittest module, the functions we want to test and any other module we need.
+import unittest
+from buffers import voronoi_polygons
+import numpy as np
+import geopandas as geop
+
+# Inputs
+X = np.random.normal(0, 1, 20).reshape(-1, 2)
+
+class BuffersTests(unittest.TestCase):
+
+    def test_vornoi_polygons(self):
+        self.assertRaises(AssertionError, voronoi_polygons, X=0)
+        self.assertRaises(AssertionError, voronoi_polygons, X=X.flatten())
+        self.assertRaises(AssertionError, voronoi_polygons, X=X.T)
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+
+      <p>A couple of important things to notice are:
+      <li> We need to define a class that inherits from unittest.TestCase.</li>
+      <li> The functions names within the class need to start with the worth
+      <i>test</i> to be recognized.</li></p>
+
+      <p>Now let's check that we get the assertions as expected. First we define
+      X=0. In this case, because 0 is an integer and not an array we will not
+      be satisfying condition 1. Then we will call the function with
+      X=X.flatten(), so we won't be satisfying condition 2 (neither condition
+      3, but the program stops before because that condition is listed first).
+      Finally, we will make a call with X=X.T, so that condition 3 is not
+      satisfied. The last two lines of the file test_buffers.py allow us to run the
+      tests from the command line.</p>
+<pre><code class="language-bash">$ python testing/test_buffers.py
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.011s
+
+OK
+</code></pre>
+
+      <p>An alternative for running the tests is with <i>nose</i> or
+      <i>nose2</i>. These are extensions to the unittest framework.
+      When using nose we do not need the last two lines in the file
+      test_buffers.py.</p>
+<pre><code class="language-bash">$ nosetests
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.011s
+
+OK
+</code></pre>
+
+      <p>Either way the output printed is the same. You may have noticed that
+      the message says that one test was run, but we are testing three
+      statements of the code. This is because our testing routine for these
+      statements is defined as one function (test_voronoi_polygons), then
+      we only have one test. The output also throws an OK, which means
+      that the code is working as expected.
+      If any of our tests failed, we would get an output like the one below.</p>
+<pre><code class="language-bash">$ python testing/test_buffers.py
+F
+======================================================================
+FAIL: test_vornoi_polygons (__main__.BuffersTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "testing/test_buffers.py", line 15, in test_vornoi_polygons
+    self.assertRaises(AssertionError, voronoi_polygons, X=X) #This should be X.flatten()
+AssertionError: AssertionError not raised by voronoi_polygons
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1)
+</code></pre>
+
+      <p>Unittest is giving us a clear report of the failure. It tells
+      us the name of the function that is failing and the line of
+      the code where the problem is. To make this example, I modified line 15
+      to force the test to fail.</p>
+
+      <p>A report telling us which tests are failing is very useful, but it is
+      useful as long as we have all the right tests in place. If we have a bug
+      in our code and we do not have a test for that part of the code we would
+      not be able to spot it. To prevent not having enough tests in place, we
+      need to check the coverage. The coverage tells us how many of the lines
+      in the code are being run by our tests. Here is how we run the tests and
+      get a coverage report with nose.</p>
+<pre><code class="language-bash">$ nosetests --with-coverage --cover-erase --cover-package=.
+.
+Name                      Stmts   Miss  Cover
+---------------------------------------------
+__init__.py                   1      0   100%
+buffers.py                   41     30    27%
+testing/test_buffers.py      11      0   100%
+---------------------------------------------
+TOTAL                        65     42    35%
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+</code></pre>
+
+  <p>The option --with-coverage requests a coverage report. I also like to use the
+  option --cover-erase because it deletes previously collected coverage
+  statistics. The option --cover-package=. limits the
+  coverage report to the current directory only. In this case the report tells
+  us that we are only executing 27% of the lines in buffers.py! Since the remaining
+  73% of the code is not tested, we cannot be sure if it is working as
+  expected. For a simple code this may not be a problem. However, for large
+  programs with multiple modules calling each other repeatedly we may want to
+  put tests in place and be sure of the behaviour of our code.</p>
+
+  <p>In the repository I have included more tests. For example I am also verifying
+  that the output of the function has the expected characteristics: type and
+  dimension. Here is the output after running all the tests.</p>
+<pre><code class="language-bash">$ nosetests --with-coverage --cover-erase --cover-package=.
+...
+Name                      Stmts   Miss  Cover
+---------------------------------------------
+__init__.py                   1      0   100%
+buffers.py                   41      0   100%
+testing/test_buffers.py      33      1    97%
+---------------------------------------------
+TOTAL                        87     13    85%
+----------------------------------------------------------------------
+Ran 3 tests in 0.032s
+
+OK
+</code></pre>
+
+      <p>Now we are running 3 tests, one for each of the functions in buffer_tests.py.
+      The number of test functions is not that important, what matters is that we now
+      have a 100% coverage of buffers.py</p>
+
+
+      <span class="byline">Pytest</span>
+
+      <p>In this section we will see how to define an equivalent set of tests using pytest.
+      Unlike unittest, this framework does not need the test functions to be defined within a
+      Class.</p>
+<pre><code class="language-python">import pytest
+import geopandas as geop
+from buffers import *
+import pytest
+
+# Inputs
+X = np.random.normal(0, 1, 20).reshape(-1, 2)
+vrad = np.linspace(.1, 1, 10)
+
+def test_vornoi_polygons():
+    with pytest.raises(AssertionError):
+       voronoi_polygons(X=0)
+    with pytest.raises(AssertionError):
+       voronoi_polygons(X=X.flatten())
+    with pytest.raises(AssertionError):
+       voronoi_polygons(X=X.T)
+</code></pre>
+
+      <p>We can run the tests from the command line using the command pytest. Below
+      is the output after running these new tests.<p>
+<pre><code class="language-bash">$ pytest testing/test_buffers.py
+======================================================================== test session starts =========================================================================
+platform linux -- Python 3.5.5, pytest-3.8.1, py-1.7.0, pluggy-0.8.1
+rootdir: ~/Buffers, inifile:
+plugins: cov-2.6.1
+collected 1 item
+
+testing/test_buffers.py .                                                                                                                                      [100%]
+
+====================================================================== 1 passed in 0.38 seconds ======================================================================
+</code></pre>
+
+      <p>One item collected means that on test has been run. Just like when
+      using unittest and nose we get an execution time. So far there are
+      not many differences in the report obtained with both frameworks.
+      Next I will introduce an error in the
+      tests so that it does not raises an exception.<p>
+<pre><code class="language-bash">$ pytest testing/test_buffers.py
+======================================================================== test session starts =========================================================================
+platform linux -- Python 3.5.5, pytest-3.8.1, py-1.7.0, pluggy-0.8.1
+rootdir: ~/Buffers, inifile:
+plugins: cov-2.6.1
+collected 1 item
+
+testing/test_buffers.py F                                                                                                                                      [100%]
+
+============================================================================== FAILURES ==============================================================================
+________________________________________________________________________ test_vornoi_polygons ________________________________________________________________________
+
+    def test_vornoi_polygons():
+        with pytest.raises(AssertionError):
+           voronoi_polygons(X=0)
+        with pytest.raises(AssertionError):
+>          voronoi_polygons(X=X) #This should be X.flatten())
+E          Failed: DID NOT RAISE <class 'AssertionError'>
+
+testing/test_buffers.py:19: Failed
+====================================================================== 1 failed in 0.43 seconds ======================================================================
+</code></pre>
+
+      <p>In addition to telling us that test is failing, the report prints the
+      code and indicates which line of in test_buffers.py is not working as
+      expected. This is basically the same information that we get when we use
+      unittest, but with a different format. I prefer this format as I find it
+      easier to read.  We can also request a coverage report as shown
+      below.</p>
+
+<pre><code class="language-bash">$ pytest --cov-report term-missing --cov="."
+======================================================================== test session starts =========================================================================
+platform linux -- Python 3.5.5, pytest-3.8.1, py-1.7.0, pluggy-0.8.1
+rootdir: ~/Buffers, inifile:
+plugins: cov-2.6.1
+collected 1 item
+
+testing/test_buffers.py .                                                                                                                                      [100%]
+
+----------- coverage: platform linux, python 3.5.5-final-0 -----------
+Name                      Stmts   Miss  Cover   Missing
+-------------------------------------------------------
+__init__.py                   1      0   100%
+buffers.py                   41     30    27%   22-44, 62-81, 99-103
+testing/test_buffers.py      15      0   100%
+-------------------------------------------------------
+TOTAL                        69     42    39%
+
+
+====================================================================== 1 passed in 0.46 seconds ======================================================================
+</code></pre>
+
+      <p>This output is also similar to the one we get when using unittest and
+      nose. The new element here is the column <i>Missing</i>. This column tells
+      which lines of the code are not being executed during the tests. This is much
+      more informative. Without this column we only know if there are tests missing,
+      now we know where they are missing.</p>
+
+      <p>This is all the material I wanted to share this time. If you are
+      interested in nose, you have to be aware that nose developers already
+      recommend to use nose2 or pytests for new projects
+      (<a href="https://nose.readthedocs.io/en/latest/">see note to nose users</a>).
+      If you have tests already defined in the unittest framework, you can use
+      pytest to run them.</p>
+
+      <p>As I mentioned, I am far from being an expert on code testing, but
+      here is a post from someone who knows this stuff very well:
+      <a href="https://pybit.es/pytest-fixtures.html">All You Need to Know to
+        Start Using Fixtures in Your pytest Code</a>. In this post you can
+      learn more advanced features of pytest.</p>
+
+    </article>
+  </div>
+</div>
