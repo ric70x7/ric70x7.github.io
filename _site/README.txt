@@ -1,22 +1,37 @@
-Striped 1.0 by HTML5 Up!
-html5up.net | @n33co
+I'm using a template by HTML5 UP. Here are details:
+
+"""
+Forty by HTML5 UP
+html5up.net | @ajlkn
 Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 
-This is Striped, a fully responsive HTML5 site template designed by AJ/n33
-and released for free by HTML5 Up! It features a clean, minimalistic design, styling 
-for all basic page elements (including blockquotes, tables and lists), a repositionable 
-sidebar (left or right), and HTML5/CSS3 code designed for quick and easy customization 
-(see code comments for details). 
 
-Feedback, bug reports, and comments are not only welcome, but strongly encouraged :)
+This is Forty, my latest and greatest addition to HTML5 UP and, per its incredibly
+creative name, my 40th (woohoo)! It's built around a grid of "image tiles" that are
+set up to smoothly transition to secondary landing pages (for which a separate page
+template is provided), and includes a number of neat effects (check out the menu!),
+extra features, and all the usual stuff you'd expect. Hope you dig it!
 
-- AJ (@n33co)
+Demo images* courtesy of Unsplash, a radtastic collection of CC0 (public domain) images
+you can use for pretty much whatever.
 
-PS: This site template is fully responsive, meaning it'll look great on desktop 
-(widescreen and standard), tablet and mobile device displays. To see what this looks
-like, just narrow down your browser window and hit "reload".
+(* = not included)
 
-Image Credits:
-	n33-robot-invader.jpg: AJ (n33.co) -- image for demo purposes only!
-	fotogrph-dark-stairwell.jpg: Fotogrph (fotogrph.com)
-	Icons: Iconify.it (iconify.it)
+AJ
+aj@lkn.io | @ajlkn
+
+
+Credits:
+
+	Demo Images:
+		Unsplash (unsplash.com)
+
+	Icons:
+		Font Awesome (fontawesome.io)
+
+	Other:
+		jQuery (jquery.com)
+		Scrollex (github.com/ajlkn/jquery.scrollex)
+		Responsive Tools (github.com/ajlkn/responsive-tools)
+
+"""
