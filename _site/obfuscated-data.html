@@ -1,0 +1,283 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Elements - Forty by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/light-background.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link href="assets/myedits/prism/prism.css" rel="stylesheet" />
+	</head>
+	<body class="is-preload">
+    <script src="assets/myedits/prism/prism.js"></script>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>The Bits & Marbles
+            Lab</strong> <span>Home Page</span></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="index.html#one">Projects</a></li>
+							<li><a href="index.html#two">About Me</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>Sensitivity Analysis of Data Obfuscation</h1>
+									</header>
+
+									<!-- Content -->
+										<h4 id="content">November 6, 2021</h4>
+
+                    <p>
+                    Some time ago I worked on a project to estimate population
+                    access to electricity in Africa. This was a very
+                    interesting project where we used georeferenced data from
+                    DHS surveys, World Population Data, Land Use and Land Cover images and Nighttime
+                    Light (NTL) satellite images. It took me a while, but it finally got
+                    published in 2019 (<a
+                    href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0214635">
+                    link to publication here</a>). And since this was a peer reviewed publication,
+                    I had to put a good amount of effort addressing the reviewers comments
+                    and questions.
+                    One of the reviewers questions in particular forced me
+                    to think carefully about the methodology I was using and
+                    made me to learn something I found quite interesting.
+                    This post is about that question in particular.
+                    Just for fun, I'll go through this explanation using the <b>STAR</b>
+                    method
+                    (<b>S</b>ituation, <b>T</b>ask,
+                    <b>A</b>ction, <b>R</b>esult).
+                    </p>
+
+										<h2 id="situation">Situation</h2>
+
+                    <p>
+                    We were modeling annual Household Electricity Access in Africa
+                    between 2000 and 2013. The objective of the research was to
+                    produce a raster file per year with the probability of
+                    electricity access for the whole continent and Madagascar.
+                    One of the challenges for doing this was to handle data with different
+                    resolutions. For example, NTL and population data being expressed
+                    in pixels of 1 Km x 1 Km
+                    and DHS data points associated to GPS coordinates.
+                    </p>
+
+                    <img src="images/obfuscated-data/africa-data.png"
+                    alt="africa-data" width="1400">
+
+                    <p>
+                    There was an additional layer of complexity when handling
+                    this data. DHS survey data provided information whether or
+                    not households had access to electricity. This was the
+                    variable we wanted to predict for the whole continent.
+                    The complexity arose from the fact that for privacy
+                    protection the geolocation of the households are never
+                    reveled. First the coordinates are
+                    aggregated into clusters. Then the coordinates of
+                    cluster centroid are randomly displaced. Rural
+                    points are randomly offset up to 5 Km, with 1% moved up to
+                    10 Km; and urban points are moved up to 2 Km.
+                    This means that our target variable (electricity access)
+                    and our input variables (NTL, population, land cover) were
+                    not aligned.
+                    </p>
+
+                    <p>
+                    DHS has already established guidelines to minimize the
+                    impact of GPS points obfuscation.  It is suggested to
+                    not compute covariates using direct cell extraction
+                    (pixel value that corresponds to the GPS location), but using an
+                    average value across a 5 Km buffer around the GPS location
+                    reported. That sounds easy, but was I sure this was
+                    adequate for this specific application? How could I measure the
+                    impact of obfuscation? To be honest, I was happy to not
+                    think much about this and just follow the guidelines, but
+                    then one the reviewers brought up the same question: <b>"If
+                    points are randomly displaced, how can they be used in the
+                    statistical model?"</b>.
+                    </p>
+
+
+										<h2 id="task">Task</h2>
+
+                    <p>
+                    I had a Geostatistic model that aimed to describe the
+                    relation between binomial realizations \(y\) and a set of
+                    covariates \(x\), but I was not sure if the GPS points
+                    associated to \(y\) were indeed contained in the squares
+                    (pixels) associated to \(x\). Hence I needed to define a
+                    strategy that lead to a measurable outcome which could
+                    help us understand the impact of using a 5 Km buffer. Only then
+                    I would be able to answer if this points could be used in a
+                    statistical model.
+                    </p>
+
+
+										<h2 id="action">Action</h2>
+                    <p>
+                    I performed a simulation analysis to assess the impact
+                    of the locations displacement.
+                    First I generated a synthetic dataset of 10,000
+                    observations representing cluster centroids without
+                    displacement. Then I displaced the centroids of this
+                    dataset following DHS methodology (see image below).
+                    Now that I had two
+                    datasets, with and without displacement, I
+                    fitted Geostatistic model to both and compared the resutls.
+                    The details of the steps for simulating the dataset can be
+                    found <a
+                    href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0214635#sec011">here</a>.
+                    </p>
+
+                    <img src="images/obfuscated-data/displacement.png"
+                    alt="africa-data">
+
+
+										<h2 id="result">Result</h2>
+
+                    <p>
+                    When comparing the estimates of the fixed effects I
+                    confirmed that there was consistency in between them when using the
+                    exact and displaced locations.
+                    </p>
+
+                    <img src="images/obfuscated-data/fixed-effects.png"
+                    alt="africa-data">
+
+                    <p>
+                    I also confirmed that the target variable estimates were
+                    aligned. The image below shows the inverse logit of the
+                    probability of electricity access with obfuscated data vs
+                    non-obfuscated data.
+                    </p>
+
+                    <img src="images/obfuscated-data/target-estimates.png"
+                    alt="africa-data">
+
+                    <p>
+                    Finally, this is the part that I found the most
+                    interesting of all this small quest. The Geostatistic model
+                    used has a couple of hyperparameters that characterize the spatial
+                    variability: nominal variance and nominal range.
+                    The nominal variance of the model with obfuscated data
+                    turned out to be larger, which means a higher variability of the spatial
+                    random field. This was possibly driven by the noise due
+                    to the locations displacement. The
+                    nominal range of the spatial
+                    covariance ended up being smaller when modeling obfuscated data. This
+                    means that the radius at which two points presented a
+                    correlation above 0.1 was shorter when data had been
+                    displaced.
+                    </p>
+
+                    <img src="images/obfuscated-data/hyper.png"
+                    alt="africa-data">
+
+                    <p>
+                    Initially this last result seemed counter
+                    intuitive to me. I would expect that the displacement of
+                    locations would result in a larger nominal range. However
+                    a reduction in the range prevented correlating
+                    points that would be assumed to be correlated if using the range of the
+                    non-obfuscated data. In the end I understood it!
+                    The model with obfuscated data was relying less on the proximity of
+                    observations. This may be more adequate
+                    considering that we are not certain about the true
+                    location of the data. And at the same time this
+                    lack of certainty could be inducing a larger nominal
+                    variance.
+                    </p>
+
+                    <p>
+                    Below is an image that helps explain this.
+                    The red points represent the actual locations of
+                    three observations. The radius of
+                    the blue circle represents a hypothetical large nominal
+                    range. All points within the blue
+                    circle are correlated with A (\(\rho > 0.1\) to be more precise).
+                    That is the case of point C, but not of point B.
+                    The magenta dots represent potential
+                    displaced locations of points B
+                    and C. For the sake of this example we do not displace
+                    point A. If we use the large
+                    nominal range, point A will be still correlated with most
+                    of the displaced locations of C.
+                    In addition, A will also be assumed to be correlated with
+                    some displaced locations of B (which is wrong).
+                    However, if instead we use a short nominal range (radius of
+                    the yellow circle), A will be
+                    considered to be correlated only to a few displaced
+                    locations of C, and it will no longer
+                    be correlated with any of the displaced locations in B.
+                    I think this change in the hyperparameters posteriors and
+                    what they represent is really cool.
+                    </p>
+
+                    <img src="images/obfuscated-data/circles.png"
+                    alt="africa-data">
+
+
+                    <p>
+                    This sensitivity
+                    analysis only got to be part of the Supplement of the manuscript,
+                    but now here is a small post dedicated to it.
+                    </p>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+        <!--
+							<ul class="icons">
+								<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+								<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+								<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+								<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+								<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+							</ul>
+        -->
+							<ul class="copyright">
+								<li>&copy; The Bits & Marbles Lab</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+      <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
+        async>
+      </script>
+
+	</body>
+</html>
